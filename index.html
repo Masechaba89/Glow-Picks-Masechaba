@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Glow Picks – Honest skin care and beauty finds</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f2f7;--surface:#fff;--ink:#2b1733;--muted:#6d5a76;--accent:#b8336a;--accent-ink:#fff;--line:#e4d9e8;--tint:#efe3f1;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a0f20;--surface:#261630;--ink:#f4eaf6;--muted:#b9a5c2;--accent:#ef7aa8;--accent-ink:#2b1733;--line:#3d2a49;--tint:#33203f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1a0f20;--surface:#261630;--ink:#f4eaf6;--muted:#b9a5c2;--accent:#ef7aa8;--accent-ink:#2b1733;--line:#3d2a49;--tint:#33203f;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.6 Figtree,system-ui,sans-serif}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.notice{background:var(--tint);font-size:.85rem;padding:8px 0;color:var(--muted)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:18px;padding-bottom:18px}
+.logo{font:700 1.5rem Fraunces,Georgia,serif;text-decoration:none}
+nav a{margin-left:18px;text-decoration:none;color:var(--muted);font-weight:500}
+nav a:hover{color:var(--accent)}
+.hero{padding:48px 0 32px}
+.hero h1{font:700 clamp(2.2rem,6vw,4rem)/1.05 Fraunces,Georgia,serif;margin:0 0 16px;max-width:15ch;letter-spacing:-.02em}
+.hero p{max-width:52ch;color:var(--muted);font-size:1.1rem;margin:0}
+.tools{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 24px;align-items:center}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 16px;border-radius:999px;font:500 .95rem Figtree,sans-serif;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+input[type=search]{flex:1;min-width:200px;padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;padding-bottom:48px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.swatch{height:130px;display:grid;place-items:center;font-size:3.4rem}
+.body{padding:16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.cat{font-size:.82rem;color:var(--muted)}
+.body h3{font:700 1.15rem/1.25 Fraunces,Georgia,serif;margin:0}
+.brand{color:var(--muted);font-size:.9rem}
+.body p{margin:4px 0 8px;font-size:.95rem;flex:1}
+.btn{display:block;text-align:center;background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:600;padding:11px;border-radius:10px}
+.btn:hover{filter:brightness(1.08)}
+.empty{grid-column:1/-1;color:var(--muted);padding:24px 0}
+footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:.85rem;color:var(--muted)}
+footer p{max-width:70ch;margin:0 0 8px}
+</style>
+</head>
+<body>
+<div class="notice"><div class="wrap">As an Amazon Associate I earn from qualifying purchases. Links on this site are affiliate links.</div></div>
+<header><div class="wrap"><a class="logo" href="#top">Glow Picks</a><nav><a href="#picks">Products</a><a href="#about">About</a></nav></div></header>
+<main id="top">
+<section class="hero"><div class="wrap">
+<h1>Skin care worth buying</h1>
+<p>Simple, honest picks for every step of your routine. Browse by category, then check the current price on Amazon.</p>
+<div class="tools" id="picks" role="group" aria-label="Filter products">
+<input type="search" id="q" placeholder="Search products" aria-label="Search products">
+</div>
+<div class="grid" id="grid" aria-live="polite"></div>
+</div></section>
+<section id="about"><div class="wrap" style="padding-bottom:48px"><h2 style="font:700 1.6rem Fraunces,Georgia,serif;margin:0 0 8px">About Glow Picks</h2><p style="max-width:60ch;color:var(--muted);margin:0">Replace this text with your own story: why you care about skin care, how you choose products, and what makes your recommendations trustworthy.</p></div></section>
+</main>
+<footer><div class="wrap">
+<p>As an Amazon Associate I earn from qualifying purchases. Prices and availability are shown on Amazon and may change.</p>
+<p>The content here is for general information and is not medical advice. See a dermatologist for skin conditions.</p>
+<p>© <span id="yr"></span> Glow Picks</p>
+</div></footer>
+<script>
+/* ===== EDIT THIS SECTION ===== */
+var AFFILIATE_TAG = "yourtag-20";          // your Amazon Associates tracking ID
+var AMAZON_DOMAIN = "www.amazon.com";      // the Amazon store your Associates account is for
+var PRODUCTS = [
+ // asin: paste the product’s ASIN to link straight to it. Leave "" to link to an Amazon search for the name.
+ {name:"Moisturizing Cream",brand:"CeraVe",cat:"Moisturizers",emoji:"🧴",color:"#f3d9e6",asin:"",blurb:"A rich, fragrance-free cream for dry skin, made with ceramides."},
+ {name:"Hydrating Facial Cleanser",brand:"CeraVe",cat:"Cleansers",emoji:"🫧",color:"#d9ecf3",asin:"",blurb:"A gentle, non-foaming wash that cleans without leaving skin tight."},
+ {name:"Ultra Sheer Sunscreen SPF 55",brand:"Neutrogena",cat:"Sunscreen",emoji:"☀️",color:"#fbe9c4",asin:"",blurb:"A light, non-greasy daily sunscreen that sits well under makeup."},
+ {name:"Niacinamide 10% + Zinc 1%",brand:"The Ordinary",cat:"Serums",emoji:"💧",color:"#e2f0dc",asin:"",blurb:"A budget serum that targets visible pores and uneven oil."},
+ {name:"Hyaluronic Acid 2% + B5",brand:"The Ordinary",cat:"Serums",emoji:"🧪",color:"#dfe3f7",asin:"",blurb:"A simple hydration boost that layers under any moisturizer."},
+ {name:"Lip Sleeping Mask",brand:"Laneige",cat:"Lip care",emoji:"💋",color:"#f7d6dc",asin:"",blurb:"An overnight lip treatment that leaves lips soft by morning."},
+ {name:"Gentle Skin Cleanser Bar",brand:"Cetaphil",cat:"Cleansers",emoji:"🧼",color:"#e5eef7",asin:"",blurb:"A mild everyday cleanser for sensitive or easily irritated skin."},
+ {name:"Daily Moisturizing Lotion",brand:"Aveeno",cat:"Moisturizers",emoji:"🌿",color:"#e8efd6",asin:"",blurb:"A lightweight lotion with oat that soothes and hydrates all day."}
+];
+/* ===== END EDIT SECTION ===== */
+
+var grid=document.getElementById("grid"),tools=document.getElementById("picks"),q=document.getElementById("q");
+var active="All";
+function link(p){
+ var base="https://"+AMAZON_DOMAIN;
+ var u=p.asin?base+"/dp/"+encodeURIComponent(p.asin)+"?":base+"/s?k="+encodeURIComponent(p.brand+" "+p.name)+"&";
+ return u+"tag="+encodeURIComponent(AFFILIATE_TAG);
+}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function render(){
+ var t=q.value.trim().toLowerCase();
+ var list=PRODUCTS.filter(function(p){
+  return (active==="All"||p.cat===active)&&(!t||(p.name+" "+p.brand+" "+p.cat).toLowerCase().indexOf(t)>-1);
+ });
+ grid.innerHTML=list.length?list.map(function(p){
+  return '<article class="card"><div class="swatch" style="background:'+p.color+'" aria-hidden="true">'+p.emoji+'</div><div class="body"><span class="cat">'+esc(p.cat)+'</span><h3>'+esc(p.name)+'</h3><span class="brand">by '+esc(p.brand)+'</span><p>'+esc(p.blurb)+'</p><a class="btn" href="'+link(p)+'" target="_blank" rel="sponsored nofollow noopener">Check price on Amazon</a></div></article>';
+ }).join(""):'<p class="empty">No products match. Try a different search or category.</p>';
+}
+var cats=["All"].concat(PRODUCTS.map(function(p){return p.cat}).filter(function(c,i,a){return a.indexOf(c)===i}));
+cats.forEach(function(c){
+ var b=document.createElement("button");b.className="chip";b.textContent=c;b.setAttribute("aria-pressed",c==="All");
+ b.onclick=function(){active=c;[].forEach.call(tools.querySelectorAll(".chip"),function(x){x.setAttribute("aria-pressed",x===b)});render()};
+ tools.insertBefore(b,q);
+});
+q.addEventListener("input",render);
+document.getElementById("yr").textContent=new Date().getFullYear();
+render();
+</script>
+</body>
+</html>
